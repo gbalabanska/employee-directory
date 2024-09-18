@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<style>
+    body {
+    background-color: #e8e8e8;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.login-wrapper {
+    max-width: 400px;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-header {
+    background-color: #3c2d83;
+    padding: 1rem;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    text-align: center;
+}
+
+.login-header h2 {
+    color: white;
+    margin: 0;
+}
+
+.login-form-container {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 20px; /* round all corners equally */
+    margin-top: -10px; /* to bring it closer to the header */
+}
+
+
+.form-control {
+    margin-bottom: 1rem;
+}
+
+.btn-login {
+    background-color: #ee7f54;
+    color: white;
+    border: none;
+    width: 100%;
+}
+
+.btn-login:hover {
+    background-color: #d76f48;
+}
+
+.signup-text {
+    text-align: center;
+    margin-top: 1rem;
+    color: #3c2d83;
+}
+
+.signup-link {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+.signup-link a {
+    background-color: #3c2d83;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.signup-link a:hover {
+    background-color: #2b2262;
+}
+
+.alert {
+    color: white;
+    background-color: #ee7f54;
+    border: none;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+</style>
+<body>
+<div class="login-wrapper">
+    <div class="login-header">
+        <h2>Login</h2>
+    </div>
+    <div class="login-form-container">
+        <form th:action="@{/authenticateTheUser}" method="POST">
+            <div th:if="${param.error}">
+                <div class="alert">
+                    Invalid username and password.
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                </div>
+                <input type="text" name="username" class="form-control" placeholder="Username" required>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                </div>
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn btn-login">Login</button>
+        </form>
+
+        <p class="signup-text">Don't have an account?</p>
+        <div class="signup-link">
+            <a href="/sign-up">Sign Up</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
