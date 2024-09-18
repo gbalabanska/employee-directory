@@ -2,6 +2,8 @@ package com.luv2code.springboot.thymeleafdemo.controller;
 
 import java.util.List;
 
+import com.luv2code.springboot.thymeleafdemo.entity.Department;
+import com.luv2code.springboot.thymeleafdemo.service.DepartmentService;
 import com.luv2code.springboot.thymeleafdemo.service.EmployeeService;
 
 import org.springframework.stereotype.Controller;
@@ -15,12 +17,12 @@ import com.luv2code.springboot.thymeleafdemo.entity.Employee;
 public class EmployeeController {
 
 	private EmployeeService employeeService;
+	private DepartmentService departmentService;
 
-	public EmployeeController(EmployeeService theEmployeeService) {
+	public EmployeeController(EmployeeService theEmployeeService, DepartmentService theDepartmentService) {
 		employeeService = theEmployeeService;
+		departmentService = theDepartmentService;
 	}
-
-	// add mapping for "/list"
 
 	@GetMapping("/list")
 	public String listEmployees(Model theModel) {
@@ -31,7 +33,7 @@ public class EmployeeController {
 		// add to the spring model
 		theModel.addAttribute("employees", theEmployees);
 
-		return "employees/list-employees";
+		return "list-employees";
 	}
 
 	@GetMapping("/showFormForAdd")
@@ -40,20 +42,28 @@ public class EmployeeController {
 		// create model attribute to bind form data
 		Employee theEmployee = new Employee();
 
+		// get departments from service
+		List<Department> theDepartments = departmentService.findAll();
+
+		// add attributes to the model
 		theModel.addAttribute("employee", theEmployee);
+		theModel.addAttribute("departments", theDepartments);
 
 		return "employees/employee-form";
 	}
 
 	@GetMapping("/showFormForUpdate")
-	public String showFormForUpdate(@RequestParam("employeeId") int theId,
-									Model theModel) {
+	public String showFormForUpdate(@RequestParam("employeeId") int theId, Model theModel) {
 
 		// get the employee from the service
 		Employee theEmployee = employeeService.findById(theId);
 
-		// set employee as a model attribute to pre-populate the form
+		// get departments from service
+		List<Department> theDepartments = departmentService.findAll();
+
+		// set employee and departments as model attributes
 		theModel.addAttribute("employee", theEmployee);
+		theModel.addAttribute("departments", theDepartments);
 
 		// send over to our form
 		return "employees/employee-form";
@@ -77,15 +87,5 @@ public class EmployeeController {
 
 		// redirect to /employees/list
 		return "redirect:/employees/list";
-
 	}
 }
-
-
-
-
-
-
-
-
-

@@ -1,5 +1,8 @@
 package com.luv2code.springboot.thymeleafdemo.entity;
 
+
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,4 +33,8 @@ public class Employee {
 
 	@Column(name = "email")
 	private String email;
+
+	@ManyToOne
+	@JoinColumn(name = "department_id", nullable = false)
+	private Department department;
 }
